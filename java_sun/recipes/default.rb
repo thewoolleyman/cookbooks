@@ -27,6 +27,16 @@ java_pkg = value_for_platform(
   "default" => "sun-java6-jdk"
 )
 
+when "ubuntu" 
+  include_recipe "apt"
+ 
+  template "/etc/apt/sources.list.d/canonical.com.list" do
+    mode "0644"
+    source "canonical.com.list.erb"
+    notifies :run, resources(:execute => "apt-get update"), :immediately
+  end
+end
+
 execute "update-java-alternatives" do
   command "update-java-alternatives --jre-headless -s java-6-sun"
   only_if do platform?("ubuntu", "debian") end
