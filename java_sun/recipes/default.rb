@@ -27,6 +27,7 @@ java_pkg = value_for_platform(
   "default" => "sun-java6-jdk"
 )
 
+case node.platform
 when "ubuntu" 
   include_recipe "apt"
  
